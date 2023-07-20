@@ -3,30 +3,28 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\NewAccessToken;
 
-class AuthRepository {
-
+class AuthRepository
+{
     public function login($data): array
     {
 
         $user = $this->findUserByEmail($data['email']);
 
-        if(! $user) {
+        if (! $user) {
             throw new Exception('User Email not exists', 404);
         }
 
-        if(! $this->isValidPassword($data['password'], $user)) {
+        if (! $this->isValidPassword($data['password'], $user)) {
             throw new Exception('Password is not correct', 404);
         }
 
         $tokenInstance = $this->createAuthToken($user);
-        
-        return $this->getAuthData($user, $tokenInstance);
 
+        return $this->getAuthData($user, $tokenInstance);
 
     }
 
@@ -53,5 +51,4 @@ class AuthRepository {
             'token_type' => 'Bearer',
         ];
     }
-
 }
