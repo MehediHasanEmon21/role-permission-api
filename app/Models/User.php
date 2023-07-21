@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +49,26 @@ class User extends Authenticatable
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function hasRole(array $roles): bool|Collection
+    {
+        return $this->roles()->whereIn('name', $roles)->get() ?? false;
+    }
+
+    public function permissions(string $permissionName): bool
+    {
+        $roles = $this->roles;
+        
+        $permissions = collect();
+
+        $permissions = $roles->map(function($role) use ($permissions) {
+           return $permissions->merge($role->permissions->pluck('name'));
+        })->values()->unique()->collapse();
+
+        return $permissions->contains($permissionName); 
+            
+        
+        
     }
 }

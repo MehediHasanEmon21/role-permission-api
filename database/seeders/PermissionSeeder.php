@@ -13,24 +13,51 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Permission List as array
         $permissions = [
 
-            'dashboard.view',
-            'role.create',
-            'role.view',
-            'role.edit',
-            'role.delete',
-            'permission.create',
-            'permission.view',
-            'permission.edit',
-            'permission.delete',
-            'profile.view',
-            'profile.edit',
-
+            [
+                'group_name' => 'dashboard',
+                'permissions' => [
+                    'dashboard.view',
+                    'dashboard.edit',
+                ]
+            ],
+            [
+                'group_name' => 'role',
+                'permissions' => [
+                    //role Permissions
+                    'role.create',
+                    'role.view',
+                    'role.edit',
+                    'role.delete',
+                ]
+            ],
+        
+            [
+                'group_name' => 'permission',
+                'permissions' => [
+                    // permision Permissions
+                    'permission.create',
+                    'permission.view',
+                    'permission.edit',
+                    'permission.delete',
+                ]
+            ],
+            
         ];
 
+        
+
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            
+            $group_name = $permission['group_name'];
+
+            foreach($permission['permissions'] as $per) {
+                
+               Permission::create(['name' => $per, 'group_name' => $group_name]);
+            }
+
         }
 
         $role = Role::where('name', 'super admin')->first();

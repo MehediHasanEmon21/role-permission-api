@@ -24,6 +24,14 @@ Route::post('/login', [Admin\AuthController::class, 'login']);
 
 Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function(){
 
-    Route::apiResource('role', RoleController::class);
+
+
+    Route::get('role', [RoleController::class, 'index']);
+
+    Route::post('role', [RoleController::class, 'store'])->middleware('permission:role.create');
+
+    Route::get('role/{role}', [RoleController::class, 'show']);
+    Route::put('role/{role}', [RoleController::class, 'update']);
+    Route::delete('role/{role}', [RoleController::class, 'destroy']);
 
 });
