@@ -2,20 +2,17 @@
 
 namespace App\Interfaces;
 
-use Illuminate\Contracts\Pagination\Paginator;
-use PhpParser\Node\Expr\Cast\Object_;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-interface CrudInterfaces {
+interface CrudInterfaces
+{
+    public function getAll(array $filterData): LengthAwarePaginator;
 
-    // public function getAll(): Paginator;
+    public function create(array $data): ?object;
 
-    public function create(array $data): object|null;
+    public function findById(int $id): ?object;
 
-    // public function findById(object $model): object|null;
+    public function update(array $data, int $id): ?object;
 
-    // public function update(array $data, object $model): object|null;
-
-    // public function delete(object $model): object|null;
-
-    
+    public function delete(int $id): ?object;
 }

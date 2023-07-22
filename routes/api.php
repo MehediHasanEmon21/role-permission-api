@@ -22,16 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login', [Admin\AuthController::class, 'login']);
 
-Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function(){
+Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function () {
 
-
-
-    Route::get('role', [RoleController::class, 'index']);
-
+    Route::get('role', [RoleController::class, 'index'])->middleware('permission:role.view');
     Route::post('role', [RoleController::class, 'store'])->middleware('permission:role.create');
-
-    Route::get('role/{role}', [RoleController::class, 'show']);
-    Route::put('role/{role}', [RoleController::class, 'update']);
-    Route::delete('role/{role}', [RoleController::class, 'destroy']);
+    Route::get('role/{id}', [RoleController::class, 'show'])->middleware('permission:role.view');
+    Route::put('role/{id}', [RoleController::class, 'update'])->middleware('permission:role.edit');
+    Route::delete('role/{id}', [RoleController::class, 'destroy'])->middleware('permission:role.delete');
 
 });

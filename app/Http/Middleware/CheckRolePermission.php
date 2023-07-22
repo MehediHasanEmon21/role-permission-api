@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckRolePermission
-{   
+{
     use ResponseTrait;
 
     /**
@@ -17,12 +17,11 @@ class CheckRolePermission
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, ...$permissions): Response
-    {   
+    {
         $user = $request->user();
-        $roles = $user->roles()->pluck('name')->toArray();
-        
-        foreach ($permissions as $per) {
-            if ($user->hasRole($roles) && $user->permissions($per)) {
+
+        foreach ($permissions as $permission) {
+            if ($user->hasPermission($permission)) {
                 return $next($request);
             }
         }

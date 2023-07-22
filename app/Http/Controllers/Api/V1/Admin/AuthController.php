@@ -26,7 +26,7 @@ class AuthController extends Controller
             return $this->responseSuccess($data, 'Logged in Successfully');
 
         } catch (Exception $e) {
-            
+
             return $this->responseError([], $e->getMessage(), $e->getCode());
 
         }

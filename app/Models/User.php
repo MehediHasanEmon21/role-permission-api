@@ -56,19 +56,17 @@ class User extends Authenticatable
         return $this->roles()->whereIn('name', $roles)->get() ?? false;
     }
 
-    public function permissions(string $permissionName): bool
+    public function hasPermission(string $permissionName): bool
     {
         $roles = $this->roles;
-        
+
         $permissions = collect();
 
-        $permissions = $roles->map(function($role) use ($permissions) {
-           return $permissions->merge($role->permissions->pluck('name'));
+        $permissions = $roles->map(function ($role) use ($permissions) {
+            return $permissions->merge($role->permissions->pluck('name'));
         })->values()->unique()->collapse();
 
-        return $permissions->contains($permissionName); 
-            
-        
-        
+        return $permissions->contains($permissionName);
+
     }
 }

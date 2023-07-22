@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
                 'permissions' => [
                     'dashboard.view',
                     'dashboard.edit',
-                ]
+                ],
             ],
             [
                 'group_name' => 'role',
@@ -31,9 +31,9 @@ class PermissionSeeder extends Seeder
                     'role.view',
                     'role.edit',
                     'role.delete',
-                ]
+                ],
             ],
-        
+
             [
                 'group_name' => 'permission',
                 'permissions' => [
@@ -42,20 +42,18 @@ class PermissionSeeder extends Seeder
                     'permission.view',
                     'permission.edit',
                     'permission.delete',
-                ]
+                ],
             ],
-            
+
         ];
 
-        
-
         foreach ($permissions as $permission) {
-            
+
             $group_name = $permission['group_name'];
 
-            foreach($permission['permissions'] as $per) {
-                
-               Permission::create(['name' => $per, 'group_name' => $group_name]);
+            foreach ($permission['permissions'] as $per) {
+
+                Permission::create(['name' => $per, 'group_name' => $group_name]);
             }
 
         }
