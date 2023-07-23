@@ -30,7 +30,6 @@ Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function () {
     Route::get('role/{id}', [RoleController::class, 'show'])->middleware('permission:role.view');
     Route::put('role/{id}', [RoleController::class, 'update'])->middleware('permission:role.edit');
     Route::delete('role/{id}', [RoleController::class, 'destroy'])->middleware('permission:role.delete');
-    Route::post('role/assign-permission', [RoleController::class, 'assign'])->middleware('permission:permission.assign');
 
     Route::get('permission', [PermissionController::class, 'index'])->middleware('permission:permission.view');
     Route::post('permission', [PermissionController::class, 'store'])->middleware('permission:permission.create');
