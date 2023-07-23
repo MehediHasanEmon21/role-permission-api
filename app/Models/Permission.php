@@ -9,5 +9,7 @@ class Permission extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['pivot'];
+    
     protected $guarded = [];
 }

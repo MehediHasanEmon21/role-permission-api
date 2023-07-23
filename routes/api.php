@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Admin;
+use App\Http\Controllers\Api\V1\Admin\PermissionController;
 use App\Http\Controllers\Api\V1\Admin\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,13 @@ Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function () {
     Route::get('role/{id}', [RoleController::class, 'show'])->middleware('permission:role.view');
     Route::put('role/{id}', [RoleController::class, 'update'])->middleware('permission:role.edit');
     Route::delete('role/{id}', [RoleController::class, 'destroy'])->middleware('permission:role.delete');
+    Route::post('role/assign-permission', [RoleController::class, 'assign'])->middleware('permission:permission.assign');
+
+    Route::get('permission', [PermissionController::class, 'index'])->middleware('permission:permission.view');
+    Route::post('permission', [PermissionController::class, 'store'])->middleware('permission:permission.create');
+    Route::get('permission/{id}', [PermissionController::class, 'show'])->middleware('permission:permission.view');
+    Route::put('permission/{id}', [PermissionController::class, 'update'])->middleware('permission:permission.edit');
+    Route::delete('permission/{id}', [PermissionController::class, 'destroy'])->middleware('permission:permission.delete');
+    
 
 });

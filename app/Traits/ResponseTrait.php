@@ -7,17 +7,17 @@ use Illuminate\Http\Response;
 
 trait ResponseTrait
 {
-    public function responseSuccess($data, $message = 'Successfull'): JsonResponse
+    public function responseSuccess($data, $message = 'Successfull', $responseCode = Response::HTTP_OK): JsonResponse
     {
         return response()->json([
             'status' => true,
             'message' => $message,
             'data' => $data,
             'errors' => null,
-        ], Response::HTTP_OK);
+        ], $responseCode);
     }
 
-    public function responseError($errors, $message = 'Something went wrong.', int $responseCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
+    public function responseError($errors, $message = 'Something went wrong.', $responseCode = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
         return response()->json([
             'status' => false,

@@ -13,17 +13,28 @@ class RoleRepositoty implements CrudInterfaces
     {
         $perPage = $filterData['perPage'] ?? 10;
 
-        return Role::orderBy('id', 'desc')->paginate($perPage);
+        return Role::with(['permissions:id,name,group_name'])->orderBy('id', 'desc')->paginate($perPage);
     }
 
     public function create(array $data): ?Role
-    {
-        return Role::create($data);
+    {   
+
+        $permissions = $data['permissions'] ?? false;
+        
+        unset($data['permissions']);
+
+        $role = Role::create($data);
+
+        if($permissions){
+            $role->permissions()->attach($permissions);
+        }
+
+        return $role;
     }
 
     public function findById(int $id): ?Role
     {
-        $role = Role::find($id);
+        $role = Role::with(['permissions:id,name,group_name'])->find($id);
 
         if (empty($role)) {
             throw new Exception('Role Not Found', 404);
@@ -37,7 +48,15 @@ class RoleRepositoty implements CrudInterfaces
 
         $role = $this->findById($id);
 
+        $permissions = $data['permissions'] ?? false;
+        
+        unset($data['permissions']);
+
         $update = $role->update($data);
+
+        if($permissions){
+            $role->permissions()->sync($permissions);
+        }
 
         if (! $update) {
             throw new Exception('Role Update Error', 404);
@@ -47,7 +66,8 @@ class RoleRepositoty implements CrudInterfaces
     }
 
     public function delete(int $id): ?Role
-    {
+    {   
+        
         $role = $this->findById($id);
 
         $delete = $role->delete();
@@ -58,4 +78,5 @@ class RoleRepositoty implements CrudInterfaces
 
         return $role;
     }
+
 }

@@ -9,6 +9,7 @@ use App\Repositories\RoleRepositoty;
 use App\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -41,7 +42,7 @@ class RoleController extends Controller
     public function store(RoleCreateRequest $request): JsonResponse
     {
         try {
-
+            
             $role = $this->role->create($request->validated());
 
             return $this->responseSuccess($role, 'Role Created Successfully');
@@ -74,7 +75,7 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(RoleUpdateRequest $request, int $id)
+    public function update(RoleUpdateRequest $request, int $id): JsonResponse
     {
         try {
 
@@ -92,7 +93,7 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         try {
 
@@ -106,4 +107,5 @@ class RoleController extends Controller
 
         }
     }
+
 }
