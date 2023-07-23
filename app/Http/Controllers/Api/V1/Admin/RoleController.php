@@ -9,7 +9,6 @@ use App\Repositories\RoleRepositoty;
 use App\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -42,7 +41,7 @@ class RoleController extends Controller
     public function store(RoleCreateRequest $request): JsonResponse
     {
         try {
-            
+
             $role = $this->role->create($request->validated());
 
             return $this->responseSuccess($role, 'Role Created Successfully');
@@ -107,5 +106,4 @@ class RoleController extends Controller
 
         }
     }
-
 }

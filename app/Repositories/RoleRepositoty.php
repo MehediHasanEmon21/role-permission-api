@@ -17,15 +17,15 @@ class RoleRepositoty implements CrudInterfaces
     }
 
     public function create(array $data): ?Role
-    {   
+    {
 
         $permissions = $data['permissions'] ?? false;
-        
+
         unset($data['permissions']);
 
         $role = Role::create($data);
 
-        if($permissions){
+        if ($permissions) {
             $role->permissions()->attach($permissions);
         }
 
@@ -49,12 +49,12 @@ class RoleRepositoty implements CrudInterfaces
         $role = $this->findById($id);
 
         $permissions = $data['permissions'] ?? false;
-        
+
         unset($data['permissions']);
 
         $update = $role->update($data);
 
-        if($permissions){
+        if ($permissions) {
             $role->permissions()->sync($permissions);
         }
 
@@ -66,8 +66,8 @@ class RoleRepositoty implements CrudInterfaces
     }
 
     public function delete(int $id): ?Role
-    {   
-        
+    {
+
         $role = $this->findById($id);
 
         $delete = $role->delete();
@@ -78,5 +78,4 @@ class RoleRepositoty implements CrudInterfaces
 
         return $role;
     }
-
 }

@@ -37,6 +37,5 @@ Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function () {
     Route::get('permission/{id}', [PermissionController::class, 'show'])->middleware('permission:permission.view');
     Route::put('permission/{id}', [PermissionController::class, 'update'])->middleware('permission:permission.edit');
     Route::delete('permission/{id}', [PermissionController::class, 'destroy'])->middleware('permission:permission.delete');
-    
 
 });

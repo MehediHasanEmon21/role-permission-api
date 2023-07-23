@@ -11,10 +11,12 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 
 class PermissionController extends Controller
-{   
+{
     use ResponseTrait;
 
-    public function __construct(private PermissionRepository $permission){}
+    public function __construct(private PermissionRepository $permission)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,7 +30,7 @@ class PermissionController extends Controller
             return $this->responseSuccess($permissions, 'Permission Found Successfully');
 
         } catch (Exception $e) {
-            
+
             return $this->responseError([], $e->getMessage(), $e->getCode());
         }
     }
@@ -39,12 +41,14 @@ class PermissionController extends Controller
     public function store(PermissionCreateRequest $request): JsonResponse
     {
         try {
-       
+
             $permission = $this->permission->create($request->validated());
+
             return $this->responseSuccess($permission, 'Permission Created Successfully', 201);
 
         } catch (Exception $e) {
             dd('ok');
+
             return $this->responseError([], $e->getMessage(), $e->getCode());
 
         }
@@ -103,6 +107,4 @@ class PermissionController extends Controller
 
         }
     }
-
-    
 }

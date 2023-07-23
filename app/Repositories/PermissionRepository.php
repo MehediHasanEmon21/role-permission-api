@@ -18,13 +18,12 @@ class PermissionRepository implements CrudInterfaces
     }
 
     public function create(array $data): ?Permission
-    {   
+    {
         $permission = Permission::create($data);
 
         $this->addPerMissionToSuper($permission);
 
-        if(empty($permission))
-        {
+        if (empty($permission)) {
             throw new Exception('Permission creating Error', 500);
         }
 
@@ -73,8 +72,7 @@ class PermissionRepository implements CrudInterfaces
     {
         $role = Role::where('name', 'super admin')->first();
 
-        if(! $role)
-        {
+        if (! $role) {
             throw new Exception('Role not found', 404);
         }
 
