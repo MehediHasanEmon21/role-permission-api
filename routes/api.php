@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Api\V1\Admin\PermissionController;
 use App\Http\Controllers\Api\V1\Admin\RoleController;
+use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +37,11 @@ Route::prefix('/admin')->middleware(['auth:sanctum'])->group(function () {
     Route::get('permission/{id}', [PermissionController::class, 'show'])->middleware('permission:permission.view');
     Route::put('permission/{id}', [PermissionController::class, 'update'])->middleware('permission:permission.edit');
     Route::delete('permission/{id}', [PermissionController::class, 'destroy'])->middleware('permission:permission.delete');
+
+    Route::get('user', [UserController::class, 'index'])->middleware('permission:user.view');
+    Route::post('user', [UserController::class, 'store'])->middleware('permission:user.create');
+    Route::get('user/{id}', [UserController::class, 'show'])->middleware('permission:user.view');
+    Route::put('user/{id}', [UserController::class, 'update'])->middleware('permission:user.edit');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->middleware('permission:user.delete');
 
 });
