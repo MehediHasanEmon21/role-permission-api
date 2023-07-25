@@ -8,13 +8,15 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\Traits\ResponseTrait;
 use Exception;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
-{   
+{
     use ResponseTrait;
 
-    public function __construct(private UserRepository $user){}
+    public function __construct(private UserRepository $user)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +33,6 @@ class UserController extends Controller
             return $this->responseError([], $e->getMessage(), $e->getCode());
         }
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -68,7 +69,6 @@ class UserController extends Controller
 
         }
     }
-
 
     /**
      * Update the specified resource in storage.

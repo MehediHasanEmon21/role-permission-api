@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements CrudInterfaces
 {
-    
-
     public function getAll(array $filterData): LengthAwarePaginator
     {
         $perPage = $filterData['perPage'] ?? 10;
@@ -20,7 +18,7 @@ class UserRepository implements CrudInterfaces
     }
 
     public function create(array $data): ?User
-    {   
+    {
 
         $data['password'] = $this->makeHashPassword($data['password']);
 
@@ -30,7 +28,7 @@ class UserRepository implements CrudInterfaces
 
         $user = User::create($data);
 
-        if(! $user){
+        if (! $user) {
             throw new Exception('User creating Error', 500);
         }
 
@@ -69,7 +67,7 @@ class UserRepository implements CrudInterfaces
         }
 
         $user->roles()->sync($roles);
-        
+
         return $user;
     }
 
